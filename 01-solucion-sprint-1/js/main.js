@@ -35,7 +35,9 @@ const kittenData_3 = {
     race: "Maine Coon",
 };
 
-const kittenDataList = [kittenData_1, kittenData_2, kittenData_3];
+
+
+const kittenDataList = [kittenData_1, kittenData_2, kittenData_3,];kittenDataList.push(newKittenDataObject);
 
 //Funciones
 function renderKitten(kittenData) {
@@ -85,6 +87,15 @@ function addNewKitten(event) {
     const valueDesc = inputDesc.value;
     const valuePhoto = inputPhoto.value;
     const valueName = inputName.value;
+    const valueRace = inputRace.value;
+    const newKittenDataObject = {
+    image: valuePhoto,
+    name: valueName,
+    desc: valueDesc,
+    race: valueRace,
+    }
+    
+
     if (valueDesc === "" && valuePhoto === "" && valueName === "") {
         labelMessageError.innerHTML = "¡Uy! parece que has olvidado algo";
     } else {
@@ -92,6 +103,7 @@ function addNewKitten(event) {
             labelMessageError.innerHTML = "";
         }
     }
+
 }
 //Cancelar la búsqueda de un gatito
 function cancelNewKitten(event) {
