@@ -37,7 +37,7 @@ const kittenData_3 = {
 
 
 
-const kittenDataList = [kittenData_1, kittenData_2, kittenData_3,];kittenDataList.push(newKittenDataObject);
+const kittenDataList = [kittenData_1, kittenData_2, kittenData_3,];
 
 //Funciones
 function renderKitten(kittenData) {
@@ -88,22 +88,33 @@ function addNewKitten(event) {
     const valuePhoto = inputPhoto.value;
     const valueName = inputName.value;
     const valueRace = inputRace.value;
-    const newKittenDataObject = {
-    image: valuePhoto,
-    name: valueName,
-    desc: valueDesc,
-    race: valueRace,
-    }
     
-
-    if (valueDesc === "" && valuePhoto === "" && valueName === "") {
+  
+    if (valueDesc === '' || valuePhoto === '' || valueName === '') {
         labelMessageError.innerHTML = "¡Uy! parece que has olvidado algo";
     } else {
-        if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
-            labelMessageError.innerHTML = "";
-        }
+        if (valueDesc !== '' || valuePhoto !== '' || valueName !== '') {
+            labelMessageError.innerHTML = '';
+    const newKittenDataObject = {
+        image: valuePhoto,
+        name: valueName,
+        desc: valueDesc,
+        race: valueRace,
+        };
+    kittenDataList.push(newKittenDataObject);
+    inputDesc.value = '';
+      inputPhoto.value = '';
+      inputName.value = '';
+      inputRace.value = '';
+
+      labelMesageError.innerHTML = 'Mola! Un nuevo gatito en Adalab!';
+
+    renderKittenList(kittenDataList);
+    
+
     }
 
+} 
 }
 //Cancelar la búsqueda de un gatito
 function cancelNewKitten(event) {
