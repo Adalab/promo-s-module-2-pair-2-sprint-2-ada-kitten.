@@ -37,8 +37,7 @@ const kittenData_3 = {
 };
 
 
-
-const kittenDataList = [kittenData_1, kittenData_2, kittenData_3,];
+// const kittenDataList = [kittenData_1, kittenData_2, kittenData_3,];
 
 //Funciones
 function renderKitten(kittenData) {
@@ -137,7 +136,7 @@ const dataKittenFiltered = kittenDataList
         .filter((kitten) => kitten.desc.includes(descrSearchText))
         renderKittenList(dataKittenFiltered);
  }        
-
+let kittenDataList = [];
 
 //Mostrar el litado de gatitos en ell HTML
 renderKittenList(kittenDataList);
@@ -147,6 +146,21 @@ linkNewFormElememt.addEventListener("click", handleClickNewCatForm);
 searchButton.addEventListener("click", filterKitten);
 buttonAdd.addEventListener("click", addNewKitten);
 buttonCancelForm.addEventListener("click", cancelNewKitten);
+
+// peticion al servidor 
+const GITHUB_USER = '<virlucero>';
+const SERVER_URL = `https://dev.adalab.es/api/kittens/${GITHUB_USER}`;
+
+
+
+fetch(SERVER_URL, {
+  method: 'GET',
+  headers: {'Content-Type': 'application/json'},
+}).then((response)=>response.json())
+.then((data)=>{kittenDataList = data.results
+renderKittenList(kittenDataList);
+});
+
 
 
 
