@@ -151,16 +151,47 @@ buttonCancelForm.addEventListener("click", cancelNewKitten);
 const GITHUB_USER = '<virlucero>';
 const SERVER_URL = `https://dev.adalab.es/api/kittens/${GITHUB_USER}`;
 
+const kittenListStored = JSON.parse(localStorage.getItem('kittensList'));
 
-
-fetch(SERVER_URL, {
-  method: 'GET',
-  headers: {'Content-Type': 'application/json'},
-}).then((response)=>response.json())
-.then((data)=>{kittenDataList = data.results
+if (kittenListStored) {
+  //si existe el listado de gatitos en el local storage
+kittenDataList = kittenListStored;
+  // vuelve a pintar el listado de gatitos
 renderKittenList(kittenDataList);
-});
 
+} else {
+
+  fetch(SERVER_URL, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      kittenDataList = data.results;
+      renderKittenList(kittenDataList);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function addNewKittenServer(newKittenDataObject) {
+  fetch(`https://dev.adalab.es/api/kittens/${GITHUB_USER}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newKittenDataObject),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        //Agregar un nuevo gatito al listado
+        kittenDataList.push(newKittenDataObject);
+        localStorage.setItem('kittensList', JSON.stringify(kittenDataList));
+
+      }
+    });
+}
 
 
 
